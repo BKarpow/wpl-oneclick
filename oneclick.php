@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: OneClickBay
-Plugin URI: https://github.com/BKarpow/wp-plugin-OneClickBay
+Plugin URI: https://github.com/BKarpow/wpl-oneclick
 Description: Плагін додає можливість купівлі в один клік в woocommerce.
 Version: 1.0
 Author: XemerOne <xymerone@gmail.com>
