@@ -1,8 +1,10 @@
 @import 'animate.min';
 
-$height_elements: 7rem;
+$height_elements: 4.2rem;
 $border_color: #dcd7ca;
 $border_radius: 9px;
+
+$width_screen_mobile: 450px;
 .one_click_box{
   .hide_slide{
     height: 0;
@@ -14,19 +16,36 @@ $border_radius: 9px;
     flex-flow: nowrap;
     justify-content: space-between;
     align-items: center;
-
+    @media screen and ( max-width: $width_screen_mobile) {
+      display: block;
+      padding: .5rem;
+    }
   }
 
 }
 .col-10{
   width: percentage(8/12);
   padding: .5rem;
+  @media screen and ( max-width: $width_screen_mobile) {
+    display: block;
+    padding: .5rem;
+    width: 100%;
+  }
 }
 .col-2{
   width: percentage(4/12);
   padding: .5rem;
+  @media screen and ( max-width: $width_screen_mobile) {
+    display: block;
+    padding: .5rem;
+    width: 100%;
+  }
   button{
     height: $height_elements;
+    @media screen and ( max-width: $width_screen_mobile) {
+      
+      width: 100%;
+    }
   }
 }
 

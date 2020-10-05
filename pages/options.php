@@ -28,6 +28,19 @@ function ok_options_page_output(){
             submit_button();
             ?>
         </form>
+
+        <script>
+            document.querySelectorAll('.set-default').forEach( item => {
+                item.addEventListener('click', function(ev){
+                   const data = ev.target.dataset
+                    const input = document.querySelector('[data-id='+data.optid+']')
+                    if (input){
+                        input.value = input.dataset.defaultvalue
+                    }
+                })
+            })
+        </script>
+
     </div>
     <?php
 }
@@ -38,6 +51,11 @@ function ok_options_page_output(){
  */
 add_action('admin_init', 'plugin_settings');
 function plugin_settings(){
+    // Animate settings block
+    include_once OK_PAGES_OPTIONS . 'animate.php';
+
+    // Alert settings block
+    include_once OK_PAGES_OPTIONS . 'alert.php';
 
     // Telegram settings block
     include_once OK_PAGES_OPTIONS . 'telegram.php';

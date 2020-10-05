@@ -10,11 +10,14 @@
 <?php endif; ?>
 
 <div class="one_click_box" id="app_one_click">
-    <h4 class="animate__animated  animate__infinite" :class="{'animate__pulse': !hide_box}">{{test}}</h4>
-    <div ref="number_box" class="flex-between animate__animated" :class="{'animate__bounceOut': hide_box}">
+
+    <h4 ref="ok_title" class="animate__animated animate__infinite ">{{test}}</h4>
+    <div ref="number_box" class="flex-between animate__animated"
+         :class="{'<?=OneClick::getConfig('ok_animate_hide_button')?>': hide_box}"
+    >
         <div class="col-10">
             <input
-                    type="text"
+                    type="number"
                     class="form-control"
                     :class="{'error-bg': error}"
                     placeholder="Ваш телефон"
@@ -36,7 +39,6 @@
 <!-- /.one_click_box -->
 <script>
     const url_order = '<?=admin_url("admin-ajax.php?action=ok_send_order")?>';
-    const url_recaptcha = '<?=admin_url("admin-ajax.php?action=ok_recaptcha_verify")?>';
  new Vue({
      el: '#app_one_click',
      data:{
@@ -58,7 +60,7 @@
              if (this.phone.length >= 9){
                  if (!this.testNumberPhone(this.phone)){
                      this.error = true
-                     this.alert = 'Некоректний номер телефону, спробуйте так +380961234567'
+                     this.alert = '<?=OneClick::getConfig('ok_alert_error_number')?>'
                  }else{
                      this.error = false
                      this.alert = ''
@@ -70,6 +72,11 @@
          }
      },
      mounted(){
+
+         <? if ($ok_animate_title = OneClick::getConfig('ok_animate_title')): ?>
+         this.$refs.ok_title.classList.add('<?=$ok_animate_title?>')
+         <?endif;?>
+
          <?php if (OK_RECAPTCHA):?>
          grecaptcha.ready(function() {
              grecaptcha.execute('<?=OK_RECAPTCHA_PUBLIC_KEY?>', {action: 'submit'}).then(function (token) {
@@ -85,7 +92,7 @@
          orderClick(){
             if (!this.testNumberPhone(this.phone)){
                 this.error = true
-                this.alert = 'Некоректний номер телефону, спробуйте так +380961234567'
+                this.alert = '<?=OneClick::getConfig('ok_alert_error_number')?>'
             }else{
                 this.orderFromPhone()
             }
@@ -105,10 +112,11 @@
              axios.post(url_order, this.productData).then(r => {
                  <?php if (!OneClick::getConfig('ok_debug_trigger')): ?>
                  this.hide_box = true
+                 this.$refs.ok_title.classList.remove('animate__animated')
                  setTimeout(()=>{
                      this.$refs.number_box.style.height = '0px'
                  }, 800)
-                 this.alert = 'Дякуємо, скоро наш менеджер звяжется з Вами'
+                 this.alert = '<?=OneClick::getConfig('ok_alert_success')?>'
                  <?php else: ?>
                  this.alert = 'Debug: ' + JSON.stringify(r.data)
                  <?php endif;  ?>
