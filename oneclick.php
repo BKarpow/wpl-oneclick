@@ -30,7 +30,7 @@ require_once CORE_ONE_CLICK . 'ajax.php';
 
 
 add_action('wp_enqueue_scripts', [$OneClick, 'includeCssJs']);
-add_action( 'woocommerce_single_product_summary', [$OneClick, 'render_block']);
+add_action(OneClick::getConfig('ok_position_hook'), [$OneClick, 'render_block']);
 
 $OneClick->load_page('options');
 
