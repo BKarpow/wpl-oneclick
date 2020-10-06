@@ -17,7 +17,7 @@
     >
         <div class="col-10">
             <input
-                    type="number"
+                    type="tel"
                     class="form-control"
                     :class="{'error-bg': error}"
                     placeholder="Ваш телефон"

@@ -4,8 +4,9 @@ $height_elements: 4.2rem;
 $border_color: #dcd7ca;
 $border_radius: 9px;
 
-$width_screen_mobile: 450px;
+$width_screen_mobile: 700px;
 .one_click_box{
+  margin: 1rem;
   .hide_slide{
     height: 0;
     opacity: 0;
@@ -14,8 +15,8 @@ $width_screen_mobile: 450px;
   .flex-between{
     display: flex;
     flex-flow: nowrap;
-    justify-content: space-between;
-    align-items: center;
+    //justify-content: space-around;
+    //align-items: center;
     @media screen and ( max-width: $width_screen_mobile) {
       display: block;
       padding: .5rem;
@@ -24,7 +25,7 @@ $width_screen_mobile: 450px;
 
 }
 .col-10{
-  width: percentage(8/12);
+  width: percentage(6/12);
   padding: .5rem;
   @media screen and ( max-width: $width_screen_mobile) {
     display: block;
@@ -42,8 +43,18 @@ $width_screen_mobile: 450px;
   }
   button{
     height: $height_elements;
+    padding: 1rem .5rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 500ms;
+    &:hover{
+      text-decoration: none;
+      //padding: 1.5rem;
+      border-radius: 9px;
+      transition: all 500ms;
+    }
     @media screen and ( max-width: $width_screen_mobile) {
-      
+
       width: 100%;
     }
   }
