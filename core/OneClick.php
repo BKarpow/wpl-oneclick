@@ -1,10 +1,18 @@
 <?php
-require_once CORE_ONE_CLICK . 'TelegramTrait.php';
-require_once CORE_ONE_CLICK . 'ReCaptcha.php';
+
 
 class OneClick
 {
-    use TelegramTrait, ReCaptcha;
+    use \OneClick\TelegramTrait,
+        \OneClick\ReCaptcha,
+        \OneClick\Install,
+        \OneClick\AddToDb;
+
+    /**
+     * Лог для режиму розробки
+     * @var array
+     */
+    public static array $log = [];
 
     private static array $product_info;
     /**
@@ -18,7 +26,33 @@ class OneClick
      */
 //    private array $product_info;
 
+    public function __construct()
+    {
+        OneClick::set_table();
+    }
 
+    /**
+     * Повертає маси логів
+     * @return array
+     */
+    public static function getLog():array
+    {
+        if (OneClick::getConfig('ok_debug_trigger')){
+            return  (array)self::$log;
+        }else{
+            return [];
+        }
+    }
+
+    /**
+     * Додає до масиву логів новий запис
+     * @param string $key - група логів
+     * @param $value
+     */
+    private static function setLog(string $key, $value):void
+    {
+        OneClick::$log[$key] = $value;
+    }
     /**
      * Повертає ім'я головного файлу css з хешем для відключення кешування браузером
      * @return string
@@ -102,50 +136,95 @@ class OneClick
         }else{
             return false;
         }
+        return false;
     }
 
     /**
-     * Стартава функція для відправки диних
-     * @param array $request_data
+     * Створює рядок повідомлення замовлення
+     * @param array $data
+     * @return string
      */
-    static public function send(array $request_data)
+    private static function parse_message(array $data):string
     {
-        $log = [];
         $message = 'Замовлено товар '. PHP_EOL;
-        foreach ($request_data as $key => $item){
+        foreach ($data as $key => $item){
             if ($key === 'token') continue;
+            if ($key === 'id') continue;
             $item = strip_tags(trim( $item));
             $key = strip_tags(trim( $key));
             if (strlen($key) > 20) $key = 'XSS attack sanitize!';
             if (strlen($item) > 250) $item = 'XSS attack sanitize!';
             $message .= "{$key}: {$item} " . PHP_EOL;
         }
+        return $message;
+    }
+
+
+    /**
+     * Перевіряє каптчу якщо та увімкнена
+     * @param string $token
+     * @return bool
+     */
+    private static function reCaptchaField(string $token):bool
+    {
         if (OneClick::getConfig('ok_recaptcha_trigger')){
             self::setRecaptchaSecret(OneClick::getConfig('ok_recaptcha_secret_key'));
-            if (!self::reVerify($request_data['token'])){
-                $log['recaptcha'] = 'error';
-                return $log;
+            if (!self::reVerify($token)){
+                self::setLog('recaptcha', 'error');
+                return false;
             }else{
-                $log['recaptcha'] = 'ok';
+                self::setLog('recaptcha', 'ok');
+                return true;
             }
         }
+        return true;
+    }
 
-
-
-        $log['message'] = $message;
-        $log['product_info'] = $request_data;
+    /**
+     * Відправляє лист на пошту
+     * @param string $message
+     */
+    private static function send_email(string $message):void
+    {
         if ($to = get_option('ok_email_to')){
-            $log['email'] = wp_mail($to, get_option('ok_email_subject'), $message);
+            self::setLog('email', wp_mail($to,
+                OneClick::getConfig('ok_email_subject'),
+                $message)
+            );
         }
-        if (OneClick::getConfig('telegram_trigger')){
-            $log['telegram'] = self::sendTelegram($message);
-        }
-        if (OneClick::getConfig('ok_debug_trigger')){
-            return $log;
-        }else{
-            return [];
-        }
+    }
 
+    private static function send_telegram(string $message):void
+    {
+        if (OneClick::getConfig('telegram_trigger')){
+            self::setLog('telegram', self::sendTelegram($message));
+        }
+    }
+
+    /**
+     * Стартава функція для відправки диних
+     * @param array $request_data
+     * @return array
+     */
+    static public function send(array $request_data)
+    {
+        $message = OneClick::parse_message($request_data);
+        if (!OneClick::reCaptchaField((string)$request_data['token']))
+            return self::getLog();
+        self::setLog('database_save', self::add_order((int)$request_data['id'], $request_data['phone']));
+        self::setLog('message', $message);
+        self::setLog('request', $request_data);
+        self::send_email($message);
+        self::send_telegram($message);
+        return self::getLog();
+    }
+
+    /**
+     * Метод встановлює налаштування за замовчуванням та таблиці в базу!
+     */
+    public static function install_plugin(){
+        OneClick::install_orders_table();
+        OneClick::set_default_options();
     }
 
 

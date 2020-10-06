@@ -46,6 +46,7 @@
          phone: '',
          tokenReCaptcha: '',
          productData: {
+             id: '<?=self::$product_info['id']?>',
              price: '<?=self::$product_info['price']?>',
              name: '<?=self::$product_info['name']?>',
              url: '<?=self::$product_info['url']?>',

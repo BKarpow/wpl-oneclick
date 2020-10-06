@@ -1,5 +1,7 @@
 <?php
 
+namespace OneClick;
+
 
 trait ReCaptcha
 {
@@ -65,7 +67,7 @@ trait ReCaptcha
      */
     public static function reVerify(string $token):bool
     {
-        if (self::$recaptcha_secret && OneClick::getConfig('ok_recaptcha_trigger')){
+        if (self::$recaptcha_secret && self::getConfig('ok_recaptcha_trigger')){
             $res = self::request_post(self::$recaptcha_url, [
                 'secret' => self::$recaptcha_secret,
                 'response' => $token,
@@ -83,4 +85,6 @@ trait ReCaptcha
             return false;
         }
     }
+
+
 }

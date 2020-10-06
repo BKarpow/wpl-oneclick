@@ -29,7 +29,7 @@ add_settings_field('ok_alert_success',
                 data-defaultValue="Успішно, чекайте Вам зателефонують." 
                 type="text" 
                 name="ok_alert_success[input]" 
-                value="'.$val.'"
+                value="'.esc_attr($val).'"
             >
             <a data-optId="ok_alert_success" class="set-default">За замовчуванням</a>
             ';
@@ -47,7 +47,7 @@ add_settings_field('ok_alert_error_number',
         data-id="ok_alert_error_number"
         data-defaultValue="Помилка, номер некоректний."
         name="ok_alert_error_number[input]"
-        value="'.$val.'"> <a data-optId="ok_alert_error_number" class="set-default">За замовчуванням</a>';
+        value="'.esc_attr($val).'"> <a data-optId="ok_alert_error_number" class="set-default">За замовчуванням</a>';
     },
     OK_OPTION_PAGE_NAME,
     'ok_alert'

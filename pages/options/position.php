@@ -23,7 +23,7 @@ add_settings_field('ok_position_hook',
                 data-defaultValue="woocommerce_single_product_summary" 
                 type="text" 
                 name="ok_position_hook[input]" 
-                value="'.$val.'"
+                value="'.esc_attr($val).'"
             >
             <a data-optId="ok_position_hook" class="set-default">За замовчуванням</a>
             ';

@@ -22,7 +22,7 @@ add_settings_field('ok_animate_title', 'Клас анімації до заго�
             data-defaultvalue="animate__heartBeat"
             type="text"
             name="ok_animate_title[input]"
-             value="'.$val.'"
+             value="'.esc_attr($val).'"
         /> 
         <a data-optid="ok_animate_title" class="set-default" > Зп замовчуванням </a>
         ';
@@ -38,7 +38,7 @@ add_settings_field('ok_animate_hide_button', 'Клас анімації для �
             data-defaultvalue="animate__zoomOutUp"
             type="text"
             name="ok_animate_hide_button[input]"
-             value="'.$val.'"
+             value="'.esc_attr($val).'"
         /> 
         <a data-optid="ok_animate_hide_button" class="set-default" > Зп замовчуванням </a>
         
