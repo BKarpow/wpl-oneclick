@@ -16,14 +16,16 @@
          :class="{'<?=OneClick::getConfig('ok_animate_hide_button')?>': hide_box}"
     >
         <div class="col-10">
-            <input
-                    type="tel"
-                    class="form-control"
-                    :class="{'error-bg': error}"
-                    placeholder="Ваш телефон"
-                    v-model="phone"
-            >
-            <!-- /.form-control -->
+            <form @submit.prevent="orderClick">
+                <input
+                        type="tel"
+                        class="form-control"
+                        :class="{'error-bg': error}"
+                        placeholder="Ваш телефон"
+                        v-model="phone"
+                >
+                <!-- /.form-control -->
+            </form>
         </div>
         <!-- /.col-10 -->
         <div class="col-2">

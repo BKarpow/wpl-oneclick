@@ -1,6 +1,6 @@
 @import 'animate.min';
 
-$height_elements: 4.2rem;
+$height_elements: 2rem;
 $border_color: #dcd7ca;
 $border_radius: 9px;
 
@@ -13,8 +13,10 @@ $width_screen_mobile: 700px;
     transition: all .5s;
   }
   .flex-between{
-    display: flex;
-    flex-flow: nowrap;
+    //display: flex;
+    //flex-flow: nowrap;
+    display: block;
+    padding: 1rem;
     //justify-content: space-around;
     //align-items: center;
     @media screen and ( max-width: $width_screen_mobile) {
@@ -25,8 +27,9 @@ $width_screen_mobile: 700px;
 
 }
 .col-10{
-  width: percentage(6/12);
+  //width: percentage(6/12);
   padding: .5rem;
+  width: 100%;
   @media screen and ( max-width: $width_screen_mobile) {
     display: block;
     padding: .5rem;
@@ -34,36 +37,32 @@ $width_screen_mobile: 700px;
   }
 }
 .col-2{
-  width: percentage(4/12);
+  //width: percentage(4/12);
+  width: 100%;
   padding: .5rem;
   @media screen and ( max-width: $width_screen_mobile) {
     display: block;
     padding: .5rem;
-    width: 100%;
+
   }
   button{
-    height: $height_elements;
-    padding: 1rem .5rem;
+    width: 100%;
     text-decoration: none;
     cursor: pointer;
     transition: all 500ms;
     &:hover{
       text-decoration: none;
-      //padding: 1.5rem;
       border-radius: 9px;
+      font-size: 2rem;
       transition: all 500ms;
-    }
-    @media screen and ( max-width: $width_screen_mobile) {
-
-      width: 100%;
     }
   }
 }
 
 .form-control{
-  height: $height_elements;
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  width: 100%;
+  margin: 1rem auto;
 }
 .error-bg{
   border: 1px solid #ffeeba;

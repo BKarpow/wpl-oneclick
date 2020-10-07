@@ -4,7 +4,7 @@
 Plugin Name: One Click (WooCommerce)
 Plugin URI: https://github.com/BKarpow/wpl-oneclick
 Description: Плагін додає можливість купівлі в один клік в WooCommerce. Додає форму вказання номеру. Має захист від спаму (reCaptcha v3) та відправку в Telegram.
-Version: 1.2
+Version: 1.2.0
 Author: XemerOne <xymerone@gmail.com>
 Author URI: http://karpow.site
 License:  GPL2
