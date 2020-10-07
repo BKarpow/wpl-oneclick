@@ -44,7 +44,11 @@ function ok_render_main(){
 register_activation_hook(__FILE__, ['OneClick', 'install_plugin']);
 
 add_action('wp_enqueue_scripts', [$OneClick, 'includeCssJs']);
-add_action(OneClick::getConfig('ok_position_hook'), [$OneClick, 'render_block']);
+
+if (OneClick::getConfig('ok_trigger')){
+    add_action(OneClick::getConfig('ok_position_hook'), [$OneClick, 'render_block']);
+}
+
 
 $OneClick->load_page('options');
 

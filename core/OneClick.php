@@ -70,7 +70,7 @@ class OneClick
     {
         $file_style_md5 = md5_file(ROOT_ONE_CLICK .'css'.DIRECTORY_SEPARATOR.'style.css');
         wp_enqueue_style( 'style-name', CSS_ONE_CLICK .  'style.css', [], $file_style_md5);
-        wp_enqueue_script( 'script-name', JS_ONE_CLICK . 'app.js', array(), '1.0.0', true );
+//        wp_enqueue_script( 'script-name', JS_ONE_CLICK . 'app.js', array(), '1.0.0', true );
     }
 
     /**
@@ -133,6 +133,7 @@ class OneClick
         if ($conf){
             if (isset($conf['input'])) return (string) $conf['input'];
             if (isset($conf['checkbox'])) return (bool) $conf['checkbox'];
+            if (is_scalar($conf)) return $conf;
         }else{
             return false;
         }

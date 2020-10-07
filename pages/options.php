@@ -52,6 +52,9 @@ function ok_options_page_output(){
 add_action('admin_init', 'plugin_settings');
 function plugin_settings(){
 
+    // Main settings block
+    include_once OK_PAGES_OPTIONS . 'enable.php';
+
     // Position settings block
     include_once OK_PAGES_OPTIONS . 'position.php';
 

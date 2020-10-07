@@ -24,6 +24,7 @@ trait Install{
      * Встановлює налаштування за замовчуванням
      */
     private static function set_default_options(){
+        update_option('ok_trigger', '1');
         update_option('ok_alert_success', 'Успішно, чекайте дзвінка');
         update_option('ok_alert_error_number', 'Пимилковий номер телефону');
         update_option('ok_animate_title', 'animate__heartBeat');
