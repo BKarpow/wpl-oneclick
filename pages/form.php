@@ -1,4 +1,9 @@
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<?php if (OneClick::getConfig('ok_debug_trigger')): ?>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<?php else: ?>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<?php endif; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <?php define('OK_RECAPTCHA', OneClick::getConfig('ok_recaptcha_trigger')); ?>
@@ -15,7 +20,12 @@
     <div ref="number_box" class="flex-between animate__animated"
          :class="{'<?=OneClick::getConfig('ok_animate_hide_button')?>': hide_box}"
     >
+
         <div class="col-10">
+            <div v-if="alert.length" class="alert-box" :class="{'alert-error': error, 'alert-success': !error}">
+                {{alert}}
+            </div>
+            <!-- /.alert-box -->
             <form @submit.prevent="orderClick">
                 <input
                         type="tel"
@@ -33,10 +43,7 @@
         </div>
         <!-- /.col-2 -->
     </div>
-    <div v-if="alert.length" class="alert-box" :class="{'alert-error': error, 'alert-success': !error}">
-        {{alert}}
-    </div>
-    <!-- /.alert-box -->
+
 </div>
 <!-- /.one_click_box -->
 <script>

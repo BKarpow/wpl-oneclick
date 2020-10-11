@@ -39,7 +39,7 @@ class ShowTable extends WP_List_Table
     {
 
         global $wpdb;
-        $order_by = ($order_by) ? " ORDER BY {$order_by}" : "";
+        $order_by = ($order_by) ? " ORDER BY {$order_by}" : " ORDER BY `date` DESC ";
         $limit = abs($limit);
         $offset = abs($offset);
         $limit_line = ($offset) ? " LIMIT {$limit}, {$offset} " : " LIMIT {$limit} ";
